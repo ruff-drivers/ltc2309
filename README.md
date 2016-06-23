@@ -6,7 +6,7 @@ The LTC2309 is a low noise, low power, 8-channel, 12-bit successive approximatio
 
 ## Supported Engines
 
-* Ruff: 1.2.0
+* Ruff: ~1.2.0
 
 ## Supported Models
 
@@ -21,10 +21,6 @@ Device `pca9685` is now part of `ruff-mbd-v1` and will be added automatically if
 Device `pca9685` exports ADC interfaces, and here's the basic usage of the exported interfaces:
 
 ```js
-adc.read(function (error, value) {
-	// Read raw value from this ADC interface.
-});
-
 adc.getVoltage(function (error, voltage) {
 	// Get voltage (usually 0 ~ 5, if the voltage reference is 5v).
 });

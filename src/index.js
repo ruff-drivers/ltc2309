@@ -28,32 +28,6 @@ function I2cAdcInterface(device, channel) {
 /**
  * @param {Function} callback
  */
-I2cAdcInterface.prototype.read = function (callback) {
-    this._device.read(this._channel, callback);
-};
-
-/**
- * @param {Function} callback
- */
-I2cAdcInterface.prototype.getVoltage = function (callback) {
-    var vref = this._device._vref;
-
-    var readCallback = callback && function (error, value) {
-        if (error) {
-            callback(error);
-            return;
-        }
-
-        var voltage = value / ((2 << 15) - 1) * vref;
-        callback(undefined, voltage);
-    };
-
-    this._device.read(this._channel, readCallback);
-};
-
-/**
- * @param {Function} callback
- */
 I2cAdcInterface.prototype.getVoltage = function (callback) {
     var vref = this._device._vref;
 
