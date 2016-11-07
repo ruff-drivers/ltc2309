@@ -1,11 +1,5 @@
 {
     "models": [],
-    "args": {
-        "voltageReference": {
-            "type": "number",
-            "default": 5
-        }
-    },
     "inputs": {
         "i2c": {
             "type": "i2c",

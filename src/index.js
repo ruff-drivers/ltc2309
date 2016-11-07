@@ -8,6 +8,8 @@
 var driver = require('ruff-driver');
 
 var UNIPOLAR_MODE = 0x08;
+var RESOLUTION_BIT = 12;
+var REFERENCE_VOLTAGE = 4.096;
 
 var CHANNEL_MAP = {
     'an-0': 0x80,
@@ -30,6 +32,7 @@ function I2cAdcInterface(device, channel) {
  */
 I2cAdcInterface.prototype.getVoltage = function (callback) {
     var vref = this._device._vref;
+    var resolution = this._device._resolution;
 
     var readCallback = callback && function (error, value) {
         if (error) {
@@ -37,8 +40,8 @@ I2cAdcInterface.prototype.getVoltage = function (callback) {
             return;
         }
 
-        var voltage = value / ((2 << 15) - 1) * vref;
-        callback(undefined, voltage);
+        var voltage = value / ((1 << resolution) - 1) * vref;
+        callback(undefined, voltage.toFixed(3));
     };
 
     this._device.read(this._channel, readCallback);
@@ -47,7 +50,8 @@ I2cAdcInterface.prototype.getVoltage = function (callback) {
 module.exports = driver({
     attach: function (inputs, context) {
         this._i2c = inputs['i2c'];
-        this._vref = context.args.voltageReference || 5;
+        this._vref = REFERENCE_VOLTAGE;
+        this._resolution = RESOLUTION_BIT;
 
         this._interfaceMap = Object.create(null);
     },
@@ -81,7 +85,7 @@ module.exports = driver({
                     return;
                 }
 
-                callback(undefined, values[0] << 8 | values[1]);
+                callback(undefined, (values[0] << 8 | values[1]) >> 4);
             };
 
             this._i2c.readBytes(channel | UNIPOLAR_MODE, 2, readCallback);

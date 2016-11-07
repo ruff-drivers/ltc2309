@@ -1,6 +1,6 @@
 {
 	"name": "ltc2309",
-	"version": "2.0.4",
+	"version": "3.0.0",
 	"description": "LTC2309 I2C-ADC Driver for Ruff.",
 	"author": "Nanchao Inc.",
 	"license": "MIT",
