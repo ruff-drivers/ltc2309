@@ -41,7 +41,7 @@ I2cAdcInterface.prototype.getVoltage = function (callback) {
         }
 
         var voltage = value / ((1 << resolution) - 1) * vref;
-        callback(undefined, voltage.toFixed(3));
+        callback(undefined, voltage.toFixed(3) - 0);
     };
 
     this._device.read(this._channel, readCallback);
